@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Financial & Business Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0f1419;
+      --bg-card: #1a2332;
+      --bg-elevated: #243044;
+      --border: #2d3a4f;
+      --text: #e8eef7;
+      --text-muted: #8b9cb3;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* ===== LOGIN ===== */
+    #login-screen {
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #0f1419 0%, #1a2332 100%);
+      padding: 24px;
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .login-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .login-card h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+
+    #login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #password-input {
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #password-input:focus {
+      border-color: var(--primary);
+    }
+
+    .login-hint {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .app-header h1 {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .header-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      background: var(--bg-elevated);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn.small {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+
+    .back-btn {
+      font-size: 0.95rem;
+    }
+
+    /* ===== GLOBAL ANALYTICS ===== */
+    .global-analytics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .analytics-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+    }
+
+    .analytics-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .analytics-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .analytics-value.positive {
+      color: var(--success);
+    }
+
+    /* ===== MAIN NAV ===== */
+    .main-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 20px 32px;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg-elevated);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .nav-icon {
+      font-size: 1.4rem;
+    }
+
+    .nav-text {
+      flex: 1;
+    }
+
+    .nav-arrow {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* ===== CONTENT ===== */
+    .content-pad {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .content-pad.centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== BUSINESS LIST ===== */
+    .business-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .business-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .business-item:hover {
+      background: var(--bg-elevated);
+      border-color: var(--primary);
+    }
+
+    .business-item-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .business-item-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== TABS ===== */
+    .tabs {
+      display: flex;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 12px;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 14px 8px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ===== FORMS ===== */
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .form-card h3 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .form-row {
+      margin-bottom: 14px;
+    }
+
+    .form-row label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-row input,
+    .form-row select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus {
+      border-color: var(--primary);
+    }
+
+    .form-row.two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ===== LISTS ===== */
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .list-header h3,
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .tx-list,
+    .inv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tx-item,
+    .inv-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .tx-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .tx-type-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .tx-type-badge.inflow {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+    }
+
+    .tx-type-badge.outflow {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+    }
+
+    .tx-amount {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .tx-amount.inflow {
+      color: var(--success);
+    }
+
+    .tx-amount.outflow {
+      color: var(--danger);
+    }
+
+    .tx-details {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .tx-delete {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+    }
+
+    .tx-delete:hover {
+      color: var(--danger);
+    }
+
+    .inv-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .inv-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .inv-stats {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inv-value {
+      font-weight: 700;
+      color: var(--primary);
+      align-self: center;
+    }
+
+    /* ===== DASHBOARD ===== */
+    .date-range-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .date-range-bar label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .date-range-bar input {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .dashboard-card h3 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .metric:last-child {
+      border-bottom: none;
+    }
+
+    .metric.highlight {
+      background: rgba(59, 130, 246, 0.08);
+      margin: 4px -12px;
+      padding: 12px;
+      border-radius: 8px;
+      border-bottom: none;
+    }
+
+    .metric strong {
+      font-weight: 700;
+    }
+
+    .debt-card {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    /* ===== STUB ===== */
+    .stub-card {
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 360px;
+    }
+
+    .stub-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .stub-card h2 {
+      margin-bottom: 8px;
+    }
+
+    .stub-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal h2 {
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    .modal input:focus {
+      border-color: var(--primary);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    /* ===== UTILS ===== */
+    .hidden {
+      display: none !important;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .global-analytics {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row.two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .analytics-value {
+        font-size: 1.2rem;
+      }
+
+      .nav-btn {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="screen active">
+    <div class="login-card">
+      <div class="login-icon">🔒</div>
+      <h1>Financial Portfolio</h1>
+      <p class="login-subtitle">Private access only</p>
+      <form id="login-form">
+        <input type="password" id="password-input" placeholder="Enter password" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-primary">Unlock</button>
+      </form>
+      <p id="login-error" class="error-msg hidden">Incorrect password</p>
+      <p class="login-hint">First time? Any password you set will become your permanent password.</p>
+    </div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div id="home-screen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h1>💼 My Portfolio</h1>
+        <span class="header-date" id="current-date"></span>
+      </div>
+      <button id="logout-btn" class="btn btn-ghost">Logout</button>
+    </header>
+
+    <section class="global-analytics">
+      <div class="analytics-card">
+        <div class="analytics-label">Total Portfolio Net Worth</div>
+        <div class="analytics-value" id="total-net-worth">₦0.00</div>
+      </div>
+      <div class="analytics-card">
+        <div class="analytics-label">Combined Monthly Net Profit</div>
+        <div class="analytics-value positive" id="monthly-net-profit">₦0.00</div>
+      </div>
+    </section>
+
+    <nav class="main-nav">
+      <button class="nav-btn" data-screen="businesses">
+        <span class="nav-icon">🏢</span>
+        <span class="nav-text">1. My Businesses</span>
+        <span class="nav-arrow">→</span>
+      </button>
+      <button class="nav-btn" data-screen="investments">
+        <span class="nav-icon">📈</span>
+        <span class="nav-text">2. My Investments</span>
+        <span class="nav-arrow">→</span>
+      </button>
+      <button class="nav-btn" data-screen="cashflow">
+        <span class="nav-icon">📊</span>
+        <span class="nav-text">3. Combined Cash Flow</span>
+        <span class="nav-arrow">→</span>
+      </button>
+      <button class="nav-btn" data-screen="drawlog">
+        <span class="nav-icon">💰</span>
+        <span class="nav-text">4. Personal Draw Log</span>
+        <span class="nav-arrow">→</span>
+      </button>
+      <button class="nav-btn" data-screen="vault">
+        <span class="nav-icon">📸</span>
+        <span class="nav-text">5. Receipt & Document Vault</span>
+        <span class="nav-arrow">→</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- BUSINESSES HUB -->
+  <div id="businesses-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="home">← Back</button>
+      <h1>🏢 My Businesses</h1>
+      <div></div>
+    </header>
+
+    <div class="content-pad">
+      <div id="business-list" class="business-list"></div>
+      <button id="add-business-btn" class="btn btn-primary btn-full">
+        ➕ Add New Business
+      </button>
+    </div>
+  </div>
+
+  <!-- LEDGER SCREEN (per business) -->
+  <div id="ledger-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="businesses">← Back</button>
+      <h1 id="ledger-title">Business Ledger</h1>
+      <div></div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="transactions">Daily Log</button>
+      <button class="tab-btn" data-tab="inventory">Inventory</button>
+      <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+    </div>
+
+    <!-- TAB A: Daily Transaction Log -->
+    <div id="tab-transactions" class="tab-content active">
+      <div class="content-pad">
+        <div class="form-card">
+          <h3>Add Transaction</h3>
+          <div class="form-row">
+            <label>Type</label>
+            <select id="tx-type">
+              <option value="inflow">📥 Cash Inflow (Revenue)</option>
+              <option value="outflow">📤 Cash Outflow (Expense)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Date</label>
+            <input type="date" id="tx-date" required>
+          </div>
+
+          <!-- Inflow fields -->
+          <div id="inflow-fields">
+            <div class="form-row">
+              <label>Item Sold</label>
+              <input type="text" id="tx-item" placeholder="e.g. Perfume Oil 50ml">
+            </div>
+            <div class="form-row two-col">
+              <div>
+                <label>Quantity</label>
+                <input type="number" id="tx-qty" min="1" step="1" value="1">
+              </div>
+              <div>
+                <label>Total Cash Received (₦)</label>
+                <input type="number" id="tx-amount-in" min="0" step="0.01" placeholder="0.00">
+              </div>
+            </div>
+          </div>
+
+          <!-- Outflow fields -->
+          <div id="outflow-fields" class="hidden">
+            <div class="form-row">
+              <label>Expense Category</label>
+              <select id="tx-category">
+                <option value="Delivery">Delivery</option>
+                <option value="Ads">Ads</option>
+                <option value="Rent">Rent</option>
+                <option value="Supplier">Supplier</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-row two-col">
+              <div>
+                <label>Amount Paid (₦)</label>
+                <input type="number" id="tx-amount-out" min="0" step="0.01" placeholder="0.00">
+              </div>
+              <div>
+                <label>Payment Type</label>
+                <select id="tx-payment-type">
+                  <option value="Cash">Cash</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Borrowed/Credit">Borrowed/Credit</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button id="add-tx-btn" class="btn btn-primary btn-full">Add Transaction</button>
+        </div>
+
+        <div class="list-header">
+          <h3>Transaction History</h3>
+          <button id="clear-tx-filter" class="btn btn-ghost small">Show All</button>
+        </div>
+        <div id="tx-list" class="tx-list"></div>
+      </div>
+    </div>
+
+    <!-- TAB B: Inventory -->
+    <div id="tab-inventory" class="tab-content">
+      <div class="content-pad">
+        <div class="form-card">
+          <h3>Update Inventory Item</h3>
+          <div class="form-row">
+            <label>Item Name</label>
+            <input type="text" id="inv-name" placeholder="e.g. Perfume Oil 50ml">
+          </div>
+          <div class="form-row two-col">
+            <div>
+              <label>Stock Count</label>
+              <input type="number" id="inv-stock" min="0" step="1" value="0">
+            </div>
+            <div>
+              <label>Unit Cost Price (₦)</label>
+              <input type="number" id="inv-cost" min="0" step="0.01" placeholder="0.00">
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Unit Selling Price (₦)</label>
+            <input type="number" id="inv-sell" min="0" step="0.01" placeholder="0.00">
+          </div>
+          <button id="save-inv-btn" class="btn btn-primary btn-full">Save / Update Item</button>
+        </div>
+
+        <h3 class="section-title">Current Inventory</h3>
+        <div id="inv-list" class="inv-list"></div>
+      </div>
+    </div>
+
+    <!-- TAB C: Dashboard -->
+    <div id="tab-dashboard" class="tab-content">
+      <div class="content-pad">
+        <div class="date-range-bar">
+          <label>From</label>
+          <input type="date" id="dash-from">
+          <label>To</label>
+          <input type="date" id="dash-to">
+          <button id="apply-range-btn" class="btn btn-secondary">Apply</button>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>Financial Health Report</h3>
+          <div class="metric">
+            <span>🔹 Total Inflow (Gross Revenue)</span>
+            <strong id="dash-inflow">₦0.00</strong>
+          </div>
+          <div class="metric">
+            <span>🔹 Total Cost of Goods Sold (COGS)</span>
+            <strong id="dash-cogs">₦0.00</strong>
+          </div>
+          <div class="metric highlight">
+            <span>🔹 GROSS PROFIT</span>
+            <strong id="dash-gross">₦0.00</strong>
+          </div>
+          <div class="metric">
+            <span>🔹 Total Outflow (Operating Expenses)</span>
+            <strong id="dash-outflow">₦0.00</strong>
+          </div>
+          <div class="metric highlight">
+            <span>🔹 NET PROFIT</span>
+            <strong id="dash-net">₦0.00</strong>
+          </div>
+          <div class="metric">
+            <span>🔹 NET PROFIT MARGIN</span>
+            <strong id="dash-margin">0%</strong>
+          </div>
+        </div>
+
+        <div class="dashboard-card debt-card">
+          <h3>🚨 Debt & Borrowing Tracker</h3>
+          <div class="metric">
+            <span>🔸 Total Liabilities (What I Borrow)</span>
+            <strong id="dash-liabilities">₦0.00</strong>
+          </div>
+          <div class="metric">
+            <span>🔸 Total Receivables (Owed to Me)</span>
+            <strong id="dash-receivables">₦0.00</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUB SCREENS -->
+  <div id="investments-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="home">← Back</button>
+      <h1>📈 My Investments</h1>
+      <div></div>
+    </header>
+    <div class="content-pad centered">
+      <div class="stub-card">
+        <div class="stub-icon">🚧</div>
+        <h2>Coming Soon</h2>
+        <p>Investment tracker will be added in the next version. You can expand this section later.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cashflow-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="home">← Back</button>
+      <h1>📊 Combined Cash Flow</h1>
+      <div></div>
+    </header>
+    <div class="content-pad centered">
+      <div class="stub-card">
+        <div class="stub-icon">🚧</div>
+        <h2>Coming Soon</h2>
+        <p>Combined inflow/outflow across all businesses will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="drawlog-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="home">← Back</button>
+      <h1>💰 Personal Draw Log</h1>
+      <div></div>
+    </header>
+    <div class="content-pad centered">
+      <div class="stub-card">
+        <div class="stub-icon">🚧</div>
+        <h2>Coming Soon</h2>
+        <p>Track money you withdraw for personal use.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="vault-screen" class="screen">
+    <header class="app-header">
+      <button class="btn btn-ghost back-btn" data-back="home">← Back</button>
+      <h1>📸 Receipt & Document Vault</h1>
+      <div></div>
+    </header>
+    <div class="content-pad centered">
+      <div class="stub-card">
+        <div class="stub-icon">🚧</div>
+        <h2>Coming Soon</h2>
+        <p>Upload and store tax invoices & receipts (localStorage or future cloud).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Business -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h2>Add New Business</h2>
+      <input type="text" id="new-business-name" placeholder="Enter business name">
+      <div class="modal-actions">
+        <button id="cancel-modal" class="btn btn-ghost">Cancel</button>
+        <button id="save-business" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== DATA LAYER =====
+    const STORAGE_KEY = 'fin_portfolio_v1';
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        return {
+          password: null,
+          businesses: []
+        };
+      }
+      return JSON.parse(raw);
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    let appData = loadData();
+    let currentBusinessId = null;
+
+    // ===== HELPERS =====
+    function formatMoney(n) {
+      return '₦' + Number(n || 0).toLocaleString('en-NG', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function todayISO() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function uid() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    }
+
+    function getBusiness(id) {
+      return appData.businesses.find(b => b.id === id);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ===== NAVIGATION =====
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(id + '-screen');
+      if (el) el.classList.add('active');
+    }
+
+    // ===== LOGIN =====
+    const loginForm = document.getElementById('login-form');
+    const passwordInput = document.getElementById('password-input');
+    const loginError = document.getElementById('login-error');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pwd = passwordInput.value.trim();
+      if (!pwd) return;
+
+      if (!appData.password) {
+        // First time: set password
+        appData.password = pwd;
+        saveData(appData);
+        unlock();
+      } else if (appData.password === pwd) {
+        unlock();
+      } else {
+        loginError.classList.remove('hidden');
+        passwordInput.value = '';
+      }
+    });
+
+    function unlock() {
+      loginError.classList.add('hidden');
+      passwordInput.value = '';
+      showScreen('home');
+      refreshHome();
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      showScreen('login');
+    });
+
+    // ===== HOME =====
+    function refreshHome() {
+      document.getElementById('current-date').textContent =
+        new Date().toLocaleDateString('en-GB', {
+          weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+        });
+
+      let totalNetWorth = 0;
+      let monthlyNet = 0;
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      appData.businesses.forEach(biz => {
+        const invValue = (biz.inventory || []).reduce(
+          (sum, item) => sum + (item.stock * item.cost), 0
+        );
+
+        let cash = 0;
+        let monthProfit = 0;
+
+        (biz.transactions || []).forEach(tx => {
+          const amt = Number(tx.amount) || 0;
+          if (tx.type === 'inflow') {
+            cash += amt;
+          } else {
+            cash -= amt;
+          }
+
+          const d = new Date(tx.date);
+          if (d.getMonth() === currentMonth && d.getFullYear() === currentYear) {
+            if (tx.type === 'inflow') monthProfit += amt;
+            else monthProfit -= amt;
+          }
+        });
+
+        totalNetWorth += invValue + cash;
+        monthlyNet += monthProfit;
+      });
+
+      document.getElementById('total-net-worth').textContent = formatMoney(totalNetWorth);
+      const profitEl = document.getElementById('monthly-net-profit');
+      profitEl.textContent = formatMoney(monthlyNet);
+      profitEl.classList.toggle('positive', monthlyNet >= 0);
+    }
+
+    // Nav buttons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const screen = btn.dataset.screen;
+        if (screen === 'businesses') {
+          refreshBusinessList();
+          showScreen('businesses');
+        } else {
+          showScreen(screen);
+        }
+      });
+    });
+
+    // Back buttons
+    document.querySelectorAll('.back-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.back;
+        if (target === 'home') refreshHome();
+        if (target === 'businesses') refreshBusinessList();
+        showScreen(target);
+      });
+    });
+
+    // ===== BUSINESSES =====
+    function refreshBusinessList() {
+      const list = document.getElementById('business-list');
+      if (appData.businesses.length === 0) {
+        list.innerHTML = '<div class="empty-state">No businesses yet. Add your first one below.</div>';
+        return;
+      }
+
+      list.innerHTML = appData.businesses.map(b => {
+        const txCount = (b.transactions || []).length;
+        const invCount = (b.inventory || []).length;
+        return `
+          <div class="business-item" data-id="${b.id}">
+            <div>
+              <div class="business-item-name">${escapeHtml(b.name)}</div>
+              <div class="business-item-meta">${txCount} transactions · ${invCount} inventory items</div>
+            </div>
+            <span class="nav-arrow">→</span>
+          </div>
+        `;
+      }).join('');
+
+      list.querySelectorAll('.business-item').forEach(item => {
+        item.addEventListener('click', () => openLedger(item.dataset.id));
+      });
+    }
+
+    document.getElementById('add-business-btn').addEventListener('click', () => {
+      document.getElementById('new-business-name').value = '';
+      document.getElementById('modal-overlay').classList.remove('hidden');
+      document.getElementById('new-business-name').focus();
+    });
+
+    document.getElementById('cancel-modal').addEventListener('click', () => {
+      document.getElementById('modal-overlay').classList.add('hidden');
+    });
+
+    document.getElementById('save-business').addEventListener('click', () => {
+      const name = document.getElementById('new-business-name').value.trim();
+      if (!name) return;
+
+      appData.businesses.push({
+        id: uid(),
+        name,
+        transactions: [],
+        inventory: []
+      });
+      saveData(appData);
+      document.getElementById('modal-overlay').classList.add('hidden');
+      refreshBusinessList();
+    });
+
+    document.getElementById('new-business-name').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('save-business').click();
+    });
+
+    // ===== LEDGER =====
+    function openLedger(id) {
+      currentBusinessId = id;
+      const biz = getBusiness(id);
+      document.getElementById('ledger-title').textContent = biz.name;
+      switchTab('transactions');
+      document.getElementById('tx-date').value = todayISO();
+      document.getElementById('dash-from').value = '';
+      document.getElementById('dash-to').value = '';
+      refreshTransactions();
+      refreshInventory();
+      refreshDashboard();
+      showScreen('ledger');
+    }
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === name);
+      });
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.toggle('active', c.id === 'tab-' + name);
+      });
+      if (name === 'dashboard') refreshDashboard();
+    }
+
+    // Transaction type toggle
+    const txType = document.getElementById('tx-type');
+    txType.addEventListener('change', () => {
+      const isInflow = txType.value === 'inflow';
+      document.getElementById('inflow-fields').classList.toggle('hidden', !isInflow);
+      document.getElementById('outflow-fields').classList.toggle('hidden', isInflow);
+    });
+
+    // Add Transaction
+    document.getElementById('add-tx-btn').addEventListener('click', () => {
+      const biz = getBusiness(currentBusinessId);
+      if (!biz) return;
+
+      const type = txType.value;
+      const date = document.getElementById('tx-date').value;
+      if (!date) {
+        alert('Please select a date');
+        return;
+      }
+
+      let tx;
+      if (type === 'inflow') {
+        const item = document.getElementById('tx-item').value.trim();
+        const qty = Number(document.getElementById('tx-qty').value) || 0;
+        const amount = Number(document.getElementById('tx-amount-in').value) || 0;
+        if (!item || amount <= 0) {
+          alert('Please fill Item Sold and Total Cash Received');
+          return;
+        }
+        tx = { id: uid(), type: 'inflow', date, item, qty, amount };
+      } else {
+        const category = document.getElementById('tx-category').value;
+        const amount = Number(document.getElementById('tx-amount-out').value) || 0;
+        const paymentType = document.getElementById('tx-payment-type').value;
+        if (amount <= 0) {
+          alert('Please enter Amount Paid');
+          return;
+        }
+        tx = { id: uid(), type: 'outflow', date, category, amount, paymentType };
+      }
+
+      biz.transactions.push(tx);
+      biz.transactions.sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+      saveData(appData);
+
+      document.getElementById('tx-item').value = '';
+      document.getElementById('tx-qty').value = 1;
+      document.getElementById('tx-amount-in').value = '';
+      document.getElementById('tx-amount-out').value = '';
+      document.getElementById('tx-date').value = todayISO();
+
+      refreshTransactions();
+      refreshDashboard();
+    });
+
+    function refreshTransactions() {
+      const biz = getBusiness(currentBusinessId);
+      const list = document.getElementById('tx-list');
+      if (!biz || !biz.transactions.length) {
+        list.innerHTML = '<div class="empty-state">No transactions yet.</div>';
+        return;
+      }
+
+      list.innerHTML = biz.transactions.map(tx => {
+        if (tx.type === 'inflow') {
+          return `
+            <div class="tx-item">
+              <div class="tx-item-header">
+                <span class="tx-type-badge inflow">📥 Inflow</span>
+                <span class="tx-amount inflow">+${formatMoney(tx.amount)}</span>
+              </div>
+              <div class="tx-details">
+                ${escapeHtml(tx.item)} × ${tx.qty} · ${formatDate(tx.date)}
+                <button class="tx-delete" data-id="${tx.id}" title="Delete">🗑️</button>
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="tx-item">
+              <div class="tx-item-header">
+                <span class="tx-type-badge outflow">📤 Outflow</span>
+                <span class="tx-amount outflow">−${formatMoney(tx.amount)}</span>
+              </div>
+              <div class="tx-details">
+                ${escapeHtml(tx.category)} · ${tx.paymentType} · ${formatDate(tx.date)}
+                <button class="tx-delete" data-id="${tx.id}" title="Delete">🗑️</button>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      list.querySelectorAll('.tx-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (confirm('Delete this transaction?')) {
+            const biz = getBusiness(currentBusinessId);
+            biz.transactions = biz.transactions.filter(t => t.id !== btn.dataset.id);
+            saveData(appData);
+            refreshTransactions();
+            refreshDashboard();
+          }
+        });
+      });
+    }
+
+    // ===== INVENTORY =====
+    document.getElementById('save-inv-btn').addEventListener('click', () => {
+      const biz = getBusiness(currentBusinessId);
+      if (!biz) return;
+
+      const name = document.getElementById('inv-name').value.trim();
+      const stock = Number(document.getElementById('inv-stock').value) || 0;
+      const cost = Number(document.getElementById('inv-cost').value) || 0;
+      const sell = Number(document.getElementById('inv-sell').value) || 0;
+
+      if (!name) {
+        alert('Please enter Item Name');
+        return;
+      }
+
+      const existing = biz.inventory.find(i => i.name.toLowerCase() === name.toLowerCase());
+      if (existing) {
+        existing.stock = stock;
+        existing.cost = cost;
+        existing.sell = sell;
+      } else {
+        biz.inventory.push({ id: uid(), name, stock, cost, sell });
+      }
+      saveData(appData);
+
+      document.getElementById('inv-name').value = '';
+      document.getElementById('inv-stock').value = 0;
+      document.getElementById('inv-cost').value = '';
+      document.getElementById('inv-sell').value = '';
+
+      refreshInventory();
+      refreshDashboard();
+    });
+
+    function refreshInventory() {
+      const biz = getBusiness(currentBusinessId);
+      const list = document.getElementById('inv-list');
+      if (!biz || !biz.inventory.length) {
+        list.innerHTML = '<div class="empty-state">No inventory items yet.</div>';
+        return;
+      }
+
+      list.innerHTML = biz.inventory.map(item => {
+        const totalVal = item.stock * item.cost;
+        return `
+          <div class="inv-item">
+            <div>
+              <div class="inv-name">${escapeHtml(item.name)}</div>
+              <div class="inv-stats">
+                <span>Stock: ${item.stock}</span>
+                <span>Cost: ${formatMoney(item.cost)}</span>
+                <span>Sell: ${formatMoney(item.sell)}</span>
+              </div>
+            </div>
+            <div class="inv-value">${formatMoney(totalVal)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ===== DASHBOARD =====
+    document.getElementById('apply-range-btn').addEventListener('click', refreshDashboard);
+
+    function refreshDashboard() {
+      const biz = getBusiness(currentBusinessId);
+      if (!biz) return;
+
+      const from = document.getElementById('dash-from').value;
+      const to = document.getElementById('dash-to').value;
+
+      let txs = biz.transactions || [];
+      if (from) txs = txs.filter(t => t.date >= from);
+      if (to) txs = txs.filter(t => t.date <= to);
+
+      let totalInflow = 0;
+      let totalOutflow = 0;
+      let liabilities = 0;
+      let cogs = 0;
+
+      const costMap = {};
+      (biz.inventory || []).forEach(i => {
+        costMap[i.name.toLowerCase()] = i.cost;
+      });
+
+      txs.forEach(tx => {
+        if (tx.type === 'inflow') {
+          totalInflow += Number(tx.amount) || 0;
+          const unitCost = costMap[tx.item?.toLowerCase()] || 0;
+          cogs += (Number(tx.qty) || 0) * unitCost;
+        } else {
+          const amt = Number(tx.amount) || 0;
+          if (tx.paymentType === 'Borrowed/Credit') {
+            liabilities += amt;
+          } else {
+            totalOutflow += amt;
+          }
+        }
+      });
+
+      const gross = totalInflow - cogs;
+      const net = gross - totalOutflow;
+      const margin = totalInflow > 0 ? (net / totalInflow) * 100 : 0;
+      const receivables = 0;
+
+      document.getElementById('dash-inflow').textContent = formatMoney(totalInflow);
+      document.getElementById('dash-cogs').textContent = formatMoney(cogs);
+      document.getElementById('dash-gross').textContent = formatMoney(gross);
+      document.getElementById('dash-outflow').textContent = formatMoney(totalOutflow);
+      document.getElementById('dash-net').textContent = formatMoney(net);
+      document.getElementById('dash-margin').textContent = margin.toFixed(1) + '%';
+      document.getElementById('dash-liabilities').textContent = formatMoney(liabilities);
+      document.getElementById('dash-receivables').textContent = formatMoney(receivables);
+    }
+
+    // ===== INIT =====
+    showScreen('login');
+  </script>
+</body>
+</html>
